@@ -1,2 +1,2 @@
 # empleosApp
-Demo Web with SpringBoot
+Demo Web with SpringBoot and MVC
