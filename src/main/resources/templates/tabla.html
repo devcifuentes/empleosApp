@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Vacantes</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<body>
+<h1 class="text-primary">Lista de Vacantes</h1>
+<table class="table table-striped table-hover table-bordered">
+    <tr>
+        <th class="table-light">Id</th>
+        <th>Noimbre</th>
+        <th>Fecha de Publicacion</th>
+        <th>Salario Ofrecido</th>
+        <th>Descripcion</th>
+    </tr>
+
+    <tr th:each="vacante:${vacantes}">
+        <td th:text="${vacante.id}"></td>
+        <td th:text="${vacante.nombre}">Germany</td>
+        <td th:text="${vacante.fecha}">Germany</td>
+        <td th:text="${vacante.salario}">Germany</td>
+        <td th:text="${vacante.descripcion}">Germany</td>
+    </tr>
+</table>
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+</body>
+</html>

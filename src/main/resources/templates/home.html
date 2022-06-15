@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Pagina Principal</title>
+</head>
+<body>
+    <!--
+    <h1 th:text="${mensaje}">Bienvenido a Empleos App :-)</h1>
+    <h2>Hoy es [[${fecha}]]</h2>
+    -->
+<h1>Bienvenido</h1>
+<h2>Oferta de Trabajo</h2>
+    <h3 th:text="'Titulo:'+${nombre}"></h3>
+    <h3 th:text="'Fecha Pub:'+${fecha}"></h3>
+    <h3 th:text="'Salario Ofrecido:'+${salario}"></h3>
+    <h3 th:text="'Vigente:'+${vigente}"></h3>
+</body>
+</html>
