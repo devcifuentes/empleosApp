@@ -7,22 +7,44 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
 <body>
+<img th:src="@{/images/logo.png}" width="136" height="136">
 <h1 class="text-primary">Lista de Vacantes</h1>
 <table class="table table-striped table-hover table-bordered">
     <tr>
+        <th>Logo</th>
         <th class="table-light">Id</th>
         <th>Noimbre</th>
         <th>Fecha de Publicacion</th>
         <th>Salario Ofrecido</th>
         <th>Descripcion</th>
+        <th>Destacada</th>
+        <th>Detalle</th>
+        <th>Borrar</th>
     </tr>
 
     <tr th:each="vacante:${vacantes}">
+        <td>
+            <img th:src="@{/images/{tmpimg} ( tmpimg=${vacante.imagen} ) }" width="136" height="136">
+        </td>
         <td th:text="${vacante.id}"></td>
         <td th:text="${vacante.nombre}">Germany</td>
         <td th:text="${vacante.fecha}">Germany</td>
         <td th:text="${vacante.salario}">Germany</td>
         <td th:text="${vacante.descripcion}">Germany</td>
+        <!--
+        <td th:text="${vacante.destacado}"></td>
+        <td th:text="${vacante.destacado ==1 ? 'Si':'No'}"></td>
+        -->
+        <td>
+            <span th:if="${vacante.destacado==1}" class="badge text-bg-success">Si</span>
+            <span th:unless="${vacante.destacado==1}" class="badge text-bg-danger">No</span>
+        </td>
+        <td>
+            <a th:href="@{/vacantes/view/{id} (id=${vacante.id}) }" class="btn btn-success">Detalle</a>
+        </td>
+        <td>
+            <a th:href="@{/vacantes/delete(id=${vacante.id})}" class="btn btn-danger">Borrar</a>
+        </td>
     </tr>
 </table>
 <!-- JavaScript Bundle with Popper -->
