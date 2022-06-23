@@ -6,4 +6,6 @@ import java.util.List;
 public interface iVacantesService {
     List<Vacante> buscarTodas();
     Vacante buscarporId (Integer idVacante);
+
+    void guardar(Vacante vacante);
 }

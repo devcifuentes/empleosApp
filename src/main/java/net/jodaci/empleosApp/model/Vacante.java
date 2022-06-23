@@ -11,6 +11,33 @@ public class Vacante {
     private Double salario;
     private Integer destacado;
     private String imagen="no-image.png";
+    private String estatus;
+    private String detalles;
+    private Categoria categoria;
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public String getEstatus() {
+        return estatus;
+    }
+
+    public void setEstatus(String estatus) {
+        this.estatus = estatus;
+    }
+
+    public String getDetalles() {
+        return detalles;
+    }
+
+    public void setDetalles(String detalles) {
+        this.detalles = detalles;
+    }
 
     public Integer getDestacado() {
         return destacado;
@@ -78,6 +105,9 @@ public class Vacante {
                 ", salario=" + salario +
                 ", destacado=" + destacado +
                 ", imagen='" + imagen + '\'' +
+                ", estatus='" + estatus + '\'' +
+                ", detalles='" + detalles + '\'' +
+                ", categoria=" + categoria +
                 '}';
     }
 }
