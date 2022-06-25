@@ -1,6 +1,9 @@
 package net.jodaci.empleosApp.service;
 
 import net.jodaci.empleosApp.model.Vacante;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -92,5 +95,25 @@ public class VacantesServiceImpl implements iVacantesService{
     @Override
     public void guardar(Vacante vacante) {
         lista.add(vacante);
+    }
+
+    @Override
+    public List<Vacante> buscarDestacadas() {
+        return null;
+    }
+
+    @Override
+    public void eliminar(Integer idVacante) {
+
+    }
+
+    @Override
+    public List<Vacante> buscarByExample(Example<Vacante> example) {
+        return null;
+    }
+
+    @Override
+    public Page<Vacante> buscarTodas(Pageable page) {
+        return null;
     }
 }

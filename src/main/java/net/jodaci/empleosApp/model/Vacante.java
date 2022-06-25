@@ -1,9 +1,14 @@
 package net.jodaci.empleosApp.model;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table(name="vacantes")
 public class Vacante {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Solo funciona para MySQL
     private Integer id;
     private String nombre;
     private String descripcion;
@@ -13,6 +18,9 @@ public class Vacante {
     private String imagen="no-image.png";
     private String estatus;
     private String detalles;
+    //@Transient // ignora la variable a continuacion
+    @OneToOne
+    @JoinColumn(name="idCategoria")
     private Categoria categoria;
 
     public Categoria getCategoria() {
@@ -95,6 +103,9 @@ public class Vacante {
         this.salario = salario;
     }
 
+    public void reset(){
+        this.imagen=null;
+    }
     @Override
     public String toString() {
         return "Vacante{" +

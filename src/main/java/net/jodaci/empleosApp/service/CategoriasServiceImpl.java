@@ -1,7 +1,8 @@
 package net.jodaci.empleosApp.service;
 
 import net.jodaci.empleosApp.model.Categoria;
-import net.jodaci.empleosApp.model.Vacante;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
@@ -85,5 +86,15 @@ public class CategoriasServiceImpl implements iCategoriaService{
             }
         }
         return null;
+    }
+
+    @Override
+    public Page<Categoria> buscarTodas(Pageable page) {
+        return null;
+    }
+
+    @Override
+    public void eliminar(Integer idCategoria) {
+
     }
 }
