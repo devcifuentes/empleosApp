@@ -1,5 +1,6 @@
 package net.jodaci.empleosApp.controller;
 
+import net.jodaci.empleosApp.model.Perfil;
 import net.jodaci.empleosApp.model.Usuario;
 import net.jodaci.empleosApp.model.Vacante;
 import net.jodaci.empleosApp.service.iCategoriaService;
@@ -11,17 +12,20 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -35,14 +39,30 @@ public class HomeController {
     private iUsuariosService serviceUsuarios;
     @Autowired
     private iCategoriaService serviceCategorias;
-    @GetMapping("/")
-    public String mostrarHome(Model model){
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @GetMapping("/index")
+    public String mostrarIndex(Authentication auth, HttpSession session){
 
-        //List<Vacante> lista = serviceVacantes.buscarDestacadas();
-        //model.addAttribute("vacantes",lista);
-        //LAs dos lineas se sustituyen por el merodo setGenericos Whyyy????
-        return "home";
+        String userName = auth.getName();
+        System.out.println("El usuario ingresado es:"+userName);
+        for(GrantedAuthority rol: auth.getAuthorities()){
+            System.out.println("Rol: "+ rol.getAuthority());
+        }
+
+        if(session.getAttribute("usuario")== null){
+            Usuario usuario = serviceUsuarios.buscarPorUsername(userName);
+            usuario.setPassword(null);
+            System.out.println("Usuario: "+usuario);
+            session.setAttribute("usuario",usuario);
+        }
+
+
+        return "redirect:/";
     }
+
+    @GetMapping("/")
+    public String mostrarHome(Model model){        return "home";    }
 
     @GetMapping("/acercade")
     public String acercaDe(Model model){
@@ -96,8 +116,15 @@ public class HomeController {
             }
             return "/usuarios/formRegistro";
         }
+        String pwPlano = usuario.getPassword();
+        String pwdEncriptado = passwordEncoder.encode(pwPlano);
+        usuario.setPassword(pwdEncriptado);
         usuario.setEstatus(1);
         usuario.setFechaRegistro(new Date());
+        // Creamos el Perfil que le asignaremos al usuario nuevo
+        Perfil perfil = new Perfil();
+        perfil.setId(3); // Perfil USUARIO
+        usuario.agregar(perfil);
         serviceUsuarios.guardar(usuario);
         attributes.addFlashAttribute("msg", "Registro Guardado");
         return "redirect:/usuarios/index";
@@ -113,6 +140,25 @@ public class HomeController {
         model.addAttribute("vacantes",lista);
         return "home";
     }
+
+    @GetMapping("/login" )
+    public String mostrarLogin() {
+        return "formLogin";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request){
+        SecurityContextLogoutHandler logoutHandler =
+                new SecurityContextLogoutHandler();
+        logoutHandler.logout(request, null, null);
+        return "redirect:/";
+    }
+
+    @GetMapping("/error")
+    public String error(Model model){
+        return "error";
+    }
+
     @InitBinder
     public void initBinder(WebDataBinder binder){
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
@@ -124,5 +170,11 @@ public class HomeController {
         Vacante vacanteSearch = new Vacante();
         vacanteSearch.reset();
         model.addAttribute("search",vacanteSearch);
+    }
+
+    @GetMapping("/bcrypt/{texto}")
+    @ResponseBody
+    public String encriptar(@PathVariable String texto){
+        return texto + " Encriptado en bycript: "+passwordEncoder.encode(texto);
     }
 }
