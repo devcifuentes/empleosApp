@@ -4,6 +4,7 @@ import net.jodaci.empleosApp.model.Categoria;
 import net.jodaci.empleosApp.model.Vacante;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
