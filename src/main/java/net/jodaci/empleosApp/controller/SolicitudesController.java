@@ -103,8 +103,8 @@ public class SolicitudesController {
 		}
 
 		if (!multiPart.isEmpty()) {
-			//String ruta = "/empleos/files-cv/"; // Linux/MAC
-			//String ruta = "c:/empleos/files-cv/"; // Windows
+			String ruta = "/empleosApp/files-cv/"; // Linux/MAC
+			//String ruta = "c:/empleosApp/files-cv/"; // Windows
 			String nombreArchivo = Utileria.guardarArchivo(multiPart, ruta);
 			if (nombreArchivo!=null){ // El archivo (CV) si se subio
 				solicitud.setArchivo(nombreArchivo); // Asignamos el nombre de la imagen

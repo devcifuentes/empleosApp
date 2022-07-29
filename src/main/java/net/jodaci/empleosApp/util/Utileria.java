@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 
-public class Utileria {
+public class  Utileria {
     public static String guardarArchivo(MultipartFile multiPart, String ruta) {
         // Obtenemos el nombre original del archivo.
         String nombreOriginal = multiPart.getOriginalFilename();
